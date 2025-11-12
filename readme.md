@@ -46,6 +46,8 @@ Methods of creating passwords to try can be combined. All possible combinations 
 
 With some formats (e.g., ZIP), false positives can occur: an incorrect password may pass the checking algorithm even though the content is not correctly decrypted. In that case, run the cracker again — it will ignore the wrong password.
 
+When Auto decrypt option is selecte the decrypted file is store as child of the parent file (to preserve original data). To access it double click the encrypted file.
+
 ![Screenshot of cracker](images/cracker.png)
 
 #### Common passwords
