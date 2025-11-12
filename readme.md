@@ -74,6 +74,9 @@ Uses all possible password combinations generated according to specified rules.
 1. Locate the Autopsy platform (location depends on your OS). More information in the [Autopsy Documentation](https://www.sleuthkit.org/autopsy/docs/api-docs/3.1/mod_dev_page.html)
 1. Run the module directly from NetBeans, or right-click the project → Create NBM and import the file into Autopsy
 
+## API Docs
+API docs are build using Javadoc system and published [here](https://memthw.github.io/forge/)
+
 ## Future plans
 - Implement GPU-accelerated cracker
 - Use known vulnerabilities in file formats to decrypt files faster
