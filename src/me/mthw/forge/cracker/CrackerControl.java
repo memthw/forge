@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
@@ -151,7 +152,7 @@ public class CrackerControl implements Runnable
         if (crackerOptions.randomPassword)
         {
             int i = 0;
-            for (Pair<Double, Double> range : getRandomPasswordRanges())
+            for (Pair<BigInteger, BigInteger> range : getRandomPasswordRanges())
             {
                 crackers.get(i).enableRandomPassword(range.first(), range.second(), crackerOptions.randomPasswordCharSet);
                 i++;
@@ -650,8 +651,8 @@ public class CrackerControl implements Runnable
 
     /**
      * Generates a list of ranges representing the distribution of random password generation tasks across multiple threads.
-     * 
-     * Each range is defined as a pair of doubles, where the first value represents the starting index and the second value represents the ending index of the range. These
+     *
+     * Each range is defined as a pair of BigIntegers, where the first value represents the starting index and the second value represents the ending index of the range. These
      * ranges are calculated based on the total number of possible passwords within the specified length range and the number of threads available for processing.
      * 
      * The method takes into account the character set and the minimum and maximum password lengths defined in the cracker options. It ensures that the ranges are evenly
@@ -659,26 +660,34 @@ public class CrackerControl implements Runnable
      * 
      * @return A list of pairs, where each pair represents a range of indices for password generation tasks.
      */
-    private List<Pair<Double, Double>> getRandomPasswordRanges()
+    private List<Pair<BigInteger, BigInteger>> getRandomPasswordRanges()
     {
-        List<Pair<Double, Double>> ranges = new ArrayList<>();
-        double total = 0;
-        double skip = 0;
+        List<Pair<BigInteger, BigInteger>> ranges = new ArrayList<>();
+        BigInteger total = BigInteger.ZERO;
+        BigInteger skip = BigInteger.ZERO;
 
         for (int len = crackerOptions.randomPasswordMinLength; len <= crackerOptions.randomPasswordMaxLength; len++)
-            total += Math.pow(crackerOptions.randomPasswordCharSet.length, len);
+            total = total.add(BigInteger.valueOf((long) Math.pow(crackerOptions.randomPasswordCharSet.length, len)));
 
         for (int len = 0; len < crackerOptions.randomPasswordMinLength; len++)
-            skip += Math.pow(crackerOptions.randomPasswordCharSet.length, len);
+            skip = skip.add(BigInteger.valueOf((long) Math.pow(crackerOptions.randomPasswordCharSet.length, len)));
 
-        skip--;
-        double each = Math.ceil((total) / threadsCount);
+        // Only subtract one if skip is greater than zero to avoid negative values
+        if (skip.compareTo(BigInteger.ZERO) > 0) {
+            skip = skip.subtract(BigInteger.ONE);
+        }
+
+        BigInteger[] eachArr = total.divideAndRemainder(BigInteger.valueOf(threadsCount));
+        if (eachArr[1].compareTo(BigInteger.ZERO) > 0)
+            eachArr[0] = eachArr[0].add(BigInteger.ONE);
+        BigInteger each = eachArr[0];
         for (int i = 0; i < threadsCount; i++)
         {
-            double start = skip + (i * each);
-            double end = skip + ((i + 1) * each);
-            if (end > total + skip)
-                end = total + skip;
+            BigInteger start = skip.add(each.multiply(BigInteger.valueOf(i)));
+            BigInteger end = skip.add(each.multiply(BigInteger.valueOf(i + 1)));
+            BigInteger max = total.add(skip);
+            if (end.compareTo(max) > 0)
+                end = max;
             ranges.add(Pair.of(start, end));
         }
         return ranges;
