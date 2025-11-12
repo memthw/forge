@@ -2,6 +2,7 @@ package me.mthw.forge.cracker;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 
 import java.nio.file.Paths;
 
@@ -58,8 +59,8 @@ public abstract class BruteCracker implements Runnable
     protected final String decryptPath;
 
     protected boolean randomPassword = false;
-    protected double randomPasswordStartIndex = 0;
-    protected double randomPasswordEndIndex = 0;
+    protected BigInteger randomPasswordStartIndex = BigInteger.ZERO;
+    protected BigInteger randomPasswordEndIndex = BigInteger.ZERO;
     protected char[] randomPasswordCharSet = null;
 
     public BruteCracker(AbstractFile file, AtomicBoolean cancelled, AtomicReference<String> foundPassword, CrackerControl control)
@@ -191,10 +192,10 @@ public abstract class BruteCracker implements Runnable
             {
                 triedPasswordList = new ArrayList<>();
             }
-            for (double index = randomPasswordStartIndex; index < randomPasswordEndIndex; index++)
+            for (BigInteger index = randomPasswordStartIndex; index.compareTo(randomPasswordEndIndex) < 0; index = index.add(BigInteger.ONE))
             {
                 // Check every 50 passwords (synchronized access to cancelled)
-                if ((index % 50) == 0)
+                if (index.mod(BigInteger.valueOf(50)).equals(BigInteger.ZERO))
                 {
                     // Check if the thread should interrupted or cancelled
                     if (Thread.interrupted() || cancelled.get())
@@ -280,7 +281,7 @@ public abstract class BruteCracker implements Runnable
      * @param endIndex The ending index for the random password generation range.
      * @param charSet The character set to be used for generating the random password.
      */
-    public void enableRandomPassword(double startIndex, double endIndex, char[] charSet)
+    public void enableRandomPassword(BigInteger startIndex, BigInteger endIndex, char[] charSet)
     {
         this.randomPasswordStartIndex = startIndex;
         this.randomPasswordEndIndex = endIndex;
@@ -295,17 +296,19 @@ public abstract class BruteCracker implements Runnable
      * @param index The numeric index to convert into a password. Must be a non-negative value.
      * @return The generated password string corresponding to the given index.
      */
-    private String indexToPassword(double index)
+    private String indexToPassword(BigInteger index)
     {
         int base = randomPasswordCharSet.length;
         StringBuilder sb = new StringBuilder();
 
         // Build password in reverse
-        while (index >= 0)
+        BigInteger baseBI = BigInteger.valueOf(base);
+        while (index.compareTo(BigInteger.ZERO) >= 0)
         {
-            sb.append(randomPasswordCharSet[(int) (index % base)]);
-            index = (index / base) - 1;
-            if (index < 0)
+            int charIndex = index.mod(baseBI).intValue();
+            sb.append(randomPasswordCharSet[charIndex]);
+            index = index.divide(baseBI).subtract(BigInteger.ONE);
+            if (index.compareTo(BigInteger.ZERO) < 0)
                 break;
         }
 
