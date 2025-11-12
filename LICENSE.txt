@@ -1,0 +1,40 @@
+Copyright [2025] [Matěj Borský]
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+
+Used libraries under Apache License, Version 2.0:
+httpcore5-h2-5.1.3.jar - Apache Software Foundation
+poi-ooxml-lite-5.4.1.jar - Apache Software Foundation
+ant-1.10.15.jar - Apache Software Foundation
+commons-collections4-4.5.0.jar - Apache Software Foundation
+zip4j-2.11.5.jar - Independent (Srikanth Reddy Lingala)
+SparseBitSet-1.3.jar - Independent (likely Zaxxer)
+commons-math3-3.6.1.jar - Apache Software Foundation
+pdfbox-app-3.0.4.jar - Apache Software Foundation
+httpclient5-5.1.3.jar - Apache Software Foundation
+xmlresolver-5.2.2-data.jar - XML Resolver Project
+Saxon-HE-12.5.jar - Saxonica
+json-20250107.jar - JSON.org
+xmlresolver-5.2.2.jar - XML Resolver Project
+poi-ooxml-5.4.1.jar - Apache Software Foundation
+log4j-api-2.24.3.jar - Apache Software Foundation
+javassist-3.30.2-GA.jar - Javassist Project
+commons-compress-1.27.1.jar - Apache Software Foundation
+ant-launcher-1.10.15.jar - Apache Software Foundation
+httpcore5-5.1.3.jar - Apache Software Foundation
+guava-33.3.0-jre.jar - Google
+javaparser-core-3.26.2.jar - JavaParser Project
+javaparser-symbol-solver-core-3.26.2.jar - JavaParser Project
+poi-5.4.1.jar - Apache Software Foundation
+xmlbeans-5.3.0.jar - Apache Software Foundation
