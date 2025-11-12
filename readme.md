@@ -32,10 +32,10 @@ The module contains multiple submodules (Autopsy modules), and each submodule pr
 
 ### Ingest module
 When you add a new data source, the ingest module will find encrypted files and volumes and extract metadata. There are no settings currently.
-![Screenshot of ingest module before running](docs/images/ingest.png)
+![Screenshot of ingest module before running](images/ingest.png)
 
 After running the module, found encrypted files are tagged with FORGE tags and each file's metadata is displayed.
-![Screenshot of found encrypted PDFs and extracted metadata](docs/images/display.png)
+![Screenshot of found encrypted PDFs and extracted metadata](images/display.png)
 
 When working with ZIP files, the internal structure is shown and each file inside the archive has its own extracted metadata.
 
@@ -46,7 +46,7 @@ Methods of creating passwords to try can be combined. All possible combinations 
 
 With some formats (e.g., ZIP), false positives can occur: an incorrect password may pass the checking algorithm even though the content is not correctly decrypted. In that case, run the cracker again — it will ignore the wrong password.
 
-![Screenshot of cracker](docs/images/cracker.png)
+![Screenshot of cracker](images/cracker.png)
 
 #### Common passwords
 Public lists of the most common passwords. You can select the number of passwords.
@@ -73,6 +73,9 @@ Uses all possible password combinations generated according to specified rules.
 1. Add the Autopsy platform by clicking *Manage Platform*
 1. Locate the Autopsy platform (location depends on your OS). More information in the [Autopsy Documentation](https://www.sleuthkit.org/autopsy/docs/api-docs/3.1/mod_dev_page.html)
 1. Run the module directly from NetBeans, or right-click the project → Create NBM and import the file into Autopsy
+
+## API Docs
+API docs are build using Javadoc system and published [here](https://memthw.github.io/forge/)
 
 ## Future plans
 - Implement GPU-accelerated cracker
