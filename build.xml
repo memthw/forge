@@ -6,8 +6,8 @@
     <description>Builds, tests, and runs the project me.mthw.forge.</description>
     <import file="nbproject/build-impl.xml"/>
     <target name="javadoc" depends="build-init,-javadoc-init">
-        <mkdir dir="docs/${code.name.base.dashes}"/>
-        <javadoc destdir="docs/${code.name.base.dashes}" packagenames="${module.javadoc.packages}" source="${javac.source}" windowtitle="${javadoc.title}" encoding="UTF-8" charset="UTF-8">
+        <mkdir dir="docs/"/>
+        <javadoc destdir="docs/" packagenames="${module.javadoc.packages}" source="${javac.source}" windowtitle="${javadoc.title}" encoding="UTF-8" charset="UTF-8">
             <classpath refid="processor.cp"/> <!-- #157320 -->
             <sourcepath>
                 <pathelement location="${src.dir}"/>
